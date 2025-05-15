@@ -10,9 +10,14 @@ const { Title } = Typography;
 
 function App() {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const handleFileSelect = (filename: string) => {
     setSelectedFile(filename);
+  };
+
+  const handleUploadSuccess = () => {
+    setRefreshTrigger(prev => prev + 1);
   };
 
   return (
@@ -25,10 +30,10 @@ function App() {
       <Content style={{ padding: '24px' }}>
         <Space direction="vertical" size="large" style={{ width: '100%'}}>
           <Card title="Upload Video">
-            <VideoUpload />
+            <VideoUpload onUploadSuccess={handleUploadSuccess} />
           </Card>
           <Card title="Select Video for Analysis">
-            <VideoSelect onSelect={handleFileSelect} />
+            <VideoSelect onSelect={handleFileSelect} refreshTrigger={refreshTrigger} />
           </Card>
           <Card title="Preview Selected Video">
             {selectedFile ? (

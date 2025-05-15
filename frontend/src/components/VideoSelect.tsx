@@ -4,9 +4,10 @@ import { getVideoFiles } from '../api/api';
 
 interface VideoSelectProps {
     onSelect: (filename: string) => void;
+    refreshTrigger?: number;
 }
 
-const VideoSelect: React.FC<VideoSelectProps> = ({ onSelect }) => {
+const VideoSelect: React.FC<VideoSelectProps> = ({ onSelect, refreshTrigger = 0 }) => {
     const [files, setFiles] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
 
@@ -24,7 +25,7 @@ const VideoSelect: React.FC<VideoSelectProps> = ({ onSelect }) => {
         };
 
         fetchFiles();
-    }, []);
+    }, [refreshTrigger]);
 
     return (
         <Spin spinning={loading}>

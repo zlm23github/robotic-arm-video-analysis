@@ -3,8 +3,11 @@ import { useState, useRef } from "react";
 import { UploadOutlined, LinkOutlined } from "@ant-design/icons";
 import { uploadVideo, uploadVideoUrl } from "../api/api";
 
+interface VideoUploadProps {
+    onUploadSuccess?: () => void;
+}
 
-const VideoUpload: React.FC = () => {
+const VideoUpload: React.FC<VideoUploadProps> = ({ onUploadSuccess }) => {
     const [loading, setLoading] = useState(false);
     const [videoUrl, setVideoUrl] = useState("");
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -18,6 +21,7 @@ const VideoUpload: React.FC = () => {
             const response = await uploadVideo(file);
             message.success("Video uploaded successfully");
             console.log(response);
+            onUploadSuccess?.();
         } catch (error) {
             message.error("Error uploading video: " + error);
             console.error("Error uploading video:", error);
@@ -41,6 +45,7 @@ const VideoUpload: React.FC = () => {
             message.success("Video uploaded successfully");
             console.log(response);
             setVideoUrl("");
+            onUploadSuccess?.();
             return response;
         } catch (error) {
             message.error("Error uploading video: " + error);
@@ -49,7 +54,6 @@ const VideoUpload: React.FC = () => {
             setLoading(false);
         }
     };
-
 
     return (
         <Spin spinning={loading} tip="Uploading...">
