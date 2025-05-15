@@ -28,6 +28,11 @@ pip list
 ### Configure .env
 - GEMINI_API_KEY=YOUR_KEY
 
+### Run
+```bash
+python app.py
+```
+
 ## Implemented Features (Backend)
 - Support for uploading video files locally and downloading via URL
 - Automatically saves uploaded videos to the `uploads` directory
